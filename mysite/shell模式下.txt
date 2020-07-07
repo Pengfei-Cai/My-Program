@@ -1,0 +1,42 @@
+shell模式下新建文章
+>>>from blog.models import Blog
+>>> dir()
+['Blog', '__builtins__']
+>>> Blog.objects.count()
+2
+>>> blog = Blog()
+>>> dir()
+['Blog', '__builtins__', 'blog']
+>>> Blog.objects.all()
+<QuerySet [<Blog: <Blog: 第一篇博客>>, <Blog: <Blog: 第二篇博客>>]>
+>>> blog.title = "shell模式下的第一篇文章"
+>>> blog.content = "xxxxxxxxxxxxxx"
+>>> from blog.models import BlogType
+>>> BlogType.objects.all()
+<QuerySet [<BlogType: Django>, <BlogType: 日记>, <BlogType: 感悟>]>
+>>> blog_type = BlogType.objects.all()[0]
+>>> blog.blog_type = blog_type
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: cpf>]>
+>>> user  =  User.objects.all()[0]
+>>> blog.author = user
+>>> blog.save()
+>>> Blog.objects.all()
+
+for循环
+for i in range(1,31):
+...     blog = Blog()
+...     blog.title = "for %s" % i
+...     blog.content = "xxxx:%s" % i
+...     blog.blog_type = blog_type
+...     blog.author = user
+...     blog.save()
+
+
+分页器设置
+>>> from blog.models import Blog
+>>> from django.core.paginator import Paginator
+>>> blogs = Blog.objects.all()
+>>> paginator = Paginator(blogs,10)
+
